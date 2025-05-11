@@ -1,20 +1,23 @@
-import './App.css'
-import HeroSection from './components/ui/hero-section'
-import Header from './components/ui/header'
-import ExamplesSection from './components/ui/examples-section'
-import PricingSection from './components/ui/pricing-section'
-import Footer from './components/ui/footer'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/ui/header";
+import Home from "./pages/Home";
+// import About from "./pages/About";
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <Router>
+      {/* Header shows on every page */}
       <Header />
-      <HeroSection />
-      <ExamplesSection />
-      <PricingSection />
-      <Footer />
-    </div>
-  )
+
+      {/* Main content changes based on route */}
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          {/* <Route path="/about" element={<About />} /> */}
+        </Routes>
+      </main>
+    </Router>
+  );
 }
 
-export default App
+export default App;
