@@ -10,10 +10,10 @@ export default function HeroSection() {
         <div className="max-w-3xl mx-auto text-center space-y-8">
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900">
-              Create a unique logo for your brand — powered by AI.
+            Generate stunning icons in seconds with AI.
             </h1>
             <p className="text-xl text-gray-600">
-            No design skills needed. Just type your brand name and let AI do the rest.
+            Custom SVGs and PNGs tailored to your prompt — no design skills needed.
             </p>
           </div>
 
