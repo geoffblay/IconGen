@@ -10,10 +10,10 @@ export default function HeroSection() {
         <div className="max-w-3xl mx-auto text-center space-y-8">
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900">
-              Simplify your workflow with our platform
+              Create a unique logo for your brand — powered by AI.
             </h1>
             <p className="text-xl text-gray-600">
-              Boost productivity and streamline operations with our all-in-one solution designed for modern teams.
+            No design skills needed. Just type your brand name and let AI do the rest.
             </p>
           </div>
 

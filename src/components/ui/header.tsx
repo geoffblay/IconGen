@@ -14,7 +14,7 @@ export default function Header() {
         {/* Logo */}
         <div className="flex items-center">
           <Link to="/" className="text-xl font-bold">
-            YourSaaS
+            LogoGen
           </Link>
         </div>
 
