@@ -29,9 +29,6 @@ export default function PricingSection() {
         "Download in PNG & SVG",
         "All icon styles",
         "Priority generation",
-        "Email support",
-        "Basic customization",
-        "No attribution required"
       ],
       nonFeatures: [],
       cta: "Get Started",
@@ -47,38 +44,11 @@ export default function PricingSection() {
         "Download in all formats",
         "All icon styles",
         "Priority generation",
-        "Priority support",
-        "Advanced customization",
-        "Batch generation",
-        "Icon collections",
-        "API access"
       ],
       nonFeatures: [],
       cta: "Get Started",
       popular: false,
     },
-    {
-      name: "Enterprise",
-      price: "$49.99",
-      period: "per month",
-      description: "For large organizations and agencies",
-      features: [
-        "Unlimited icons",
-        "Download in all formats",
-        "All icon styles",
-        "Highest priority generation",
-        "24/7 support",
-        "Advanced customization",
-        "Batch generation",
-        "Icon collections",
-        "API access",
-        "Dedicated account manager",
-        "Custom contract",
-        "Team management"
-      ],
-      cta: "Contact Sales",
-      popular: false,
-    }
   ]
 
   return (
@@ -118,7 +88,7 @@ export default function PricingSection() {
                 </Button>
               </div>
 
-              <div className="p-6 bg-gray-50 border-t border-gray-100">
+              <div className="p-6  border-t border-gray-100">
                 <ul className="space-y-3">
                   {tier.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start">
@@ -136,10 +106,6 @@ export default function PricingSection() {
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="text-center mt-10 text-gray-600 text-sm">
-          All plans include a 14-day free trial. No credit card required.
         </div>
       </div>
     </section>
