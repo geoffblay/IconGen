@@ -38,7 +38,9 @@ export default function Header() {
           <Button asChild size="sm" variant="outline" className="ml-2">
             <Link to="/login">Login</Link>
           </Button>
-          <Button size="sm">Get Started</Button>
+          <Button asChild size="sm">
+            <Link to="/signup">Get Started</Link>
+          </Button>
         </nav>
 
         {/* Mobile Menu Button */}
