@@ -36,22 +36,7 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
-          <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-900">
-            Home
-          </a>
-          <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-900">
-            Features
-          </a>
-          <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-900">
-            Pricing
-          </a>
-          <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-900">
-            Blog
-          </a>
-          <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-900">
-            Contact
-          </a>
-          <div className="flex items-center space-x-4">
+          {/* <div className="flex items-center space-x-4"> */}
             {user ? (
               <>
                 <Link to="/generate">
@@ -77,7 +62,7 @@ export default function Header() {
                 </Link>
               </>
             )}
-          </div>
+          {/* </div> */}
         </nav>
 
         {/* Mobile Menu Button */}
