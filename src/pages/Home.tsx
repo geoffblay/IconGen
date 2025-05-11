@@ -27,7 +27,7 @@ export default function Home() {
             <Button 
               variant="outline" 
               size="lg"
-              onClick={() => navigate('/pricing')}
+              onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
               className="text-lg px-8 py-6"
             >
               View Pricing
