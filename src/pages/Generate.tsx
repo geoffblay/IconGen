@@ -31,7 +31,7 @@ export default function Generate() {
     setError(null);
 
     try {
-      const svg = await generateIcon(description, !!user);
+      const svg = await generateIcon(description);
       setGeneratedSvg(svg);
       if (user) {
         await useCredits(1, `Generated icon: ${description}`);

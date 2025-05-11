@@ -44,7 +44,7 @@ export default function PricingSection() {
       period: "one-time",
       description: "Perfect for larger projects",
       features: [
-        "150 icon generations",
+        "120 icon generations",
         "Download in all formats",
         "All icon styles",
         "Priority generation",

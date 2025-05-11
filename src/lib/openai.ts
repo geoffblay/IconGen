@@ -31,39 +31,19 @@ function incrementRateLimit() {
   localStorage.setItem(RATE_LIMIT_KEY, String(count + 1));
 }
 
-export async function generateIcon(description: string, isAuthenticated: boolean = false): Promise<string> {
-  try {
-    // Check rate limit for non-authenticated users
-    if (!isAuthenticated && !checkRateLimit()) {
-      throw new Error('Daily free generation limit reached. Please sign up to continue generating icons.');
-    }
+export async function generateIcon(description: string): Promise<string> {
+  const response = await fetch('/api/generate-icon', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ description }),
+  });
 
-    const prompt = `Create a simple, minimalist vector-style icon of ${description}. The icon should have a white background and be suitable for use in a user interface. Use clean lines and simple shapes.`;
-
-    const response = await openai.images.generate({
-      model: "gpt-image-1",
-      prompt: prompt,
-      output_format: "png",
-      background: "transparent",
-      quality: "high",
-      size: "1024x1024",
-    });
-
-    if (!response.data?.[0]?.b64_json) {
-      throw new Error('No image data returned from OpenAI');
-    }
-
-    // Increment rate limit for non-authenticated users
-    if (!isAuthenticated) {
-      incrementRateLimit();
-    }
-
-    const base64Image = response.data[0].b64_json;
-    const imageDataUrl = `data:image/png;base64,${base64Image}`;
-    
-    return `<img src="${imageDataUrl}" alt="${description}" class="w-full h-full object-contain" />`;
-  } catch (error) {
-    console.error('Error generating icon:', error);
-    throw error;
+  if (!response.ok) {
+    throw new Error('Failed to generate icon');
   }
+
+  const data = await response.json();
+  return data.svg;
 } 
