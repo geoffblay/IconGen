@@ -6,7 +6,8 @@ export default function PricingSection() {
     {
       name: "Free",
       price: "$0",
-      period: "forever",
+      credits: "3 credits",
+      period: "per day",
       description: "Perfect for trying out our icon generator",
       features: [
         "3 free generations per day",
@@ -20,33 +21,37 @@ export default function PricingSection() {
       popular: false,
     },
     {
-      name: "Basic",
+      name: "Starter Pack",
       price: "$9.99",
-      period: "per month",
-      description: "Great for individuals and small projects",
+      credits: "50 credits",
+      period: "one-time",
+      description: "Great for small projects",
       features: [
-        "50 icons per month",
+        "50 icon generations",
         "Download in PNG & SVG",
         "All icon styles",
         "Priority generation",
+        "Credits never expire",
       ],
       nonFeatures: [],
-      cta: "Get Started",
+      cta: "Buy Credits",
       popular: true,
     },
     {
-      name: "Pro",
+      name: "Pro Pack",
       price: "$19.99",
-      period: "per month",
-      description: "Perfect for professionals and teams",
+      credits: "120 credits",
+      period: "one-time",
+      description: "Perfect for larger projects",
       features: [
-        "200 icons per month",
+        "150 icon generations",
         "Download in all formats",
         "All icon styles",
         "Priority generation",
+        "Credits never expire",
       ],
       nonFeatures: [],
-      cta: "Get Started",
+      cta: "Buy Credits",
       popular: false,
     },
   ]
@@ -55,9 +60,9 @@ export default function PricingSection() {
     <section id="pricing" className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900">Simple, transparent pricing</h2>
+          <h2 className="text-3xl font-bold text-gray-900">Simple, pay-as-you-go pricing</h2>
           <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
-            Choose the plan that's right for you and start improving your workflow today
+            Buy credits and use them whenever you need. No subscriptions, no expiration.
           </p>
         </div>
 
@@ -78,6 +83,7 @@ export default function PricingSection() {
                   <span className="text-4xl font-extrabold text-gray-900">{tier.price}</span>
                   <span className="ml-1 text-xl font-medium text-gray-500">{tier.period}</span>
                 </div>
+                <div className="mt-2 text-lg font-medium text-gray-900">{tier.credits}</div>
                 <p className="mt-2 text-gray-600">{tier.description}</p>
 
                 <Button
@@ -88,7 +94,7 @@ export default function PricingSection() {
                 </Button>
               </div>
 
-              <div className="p-6  border-t border-gray-100">
+              <div className="p-6 border-t border-gray-100">
                 <ul className="space-y-3">
                   {tier.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start">
