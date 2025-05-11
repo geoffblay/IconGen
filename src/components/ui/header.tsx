@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Link } from "react-router-dom"
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -10,10 +11,11 @@ export default function Header() {
   return (
     <header className="w-full border-b bg-white">
       <div className="w-full mx-auto flex h-16 items-center justify-between px-4">
+        {/* Logo */}
         <div className="flex items-center">
-          <a href="#" className="text-xl font-bold">
+          <Link to="/" className="text-xl font-bold">
             YourSaaS
-          </a>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
@@ -33,8 +35,8 @@ export default function Header() {
           <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-900">
             Contact
           </a>
-          <Button size="sm" variant="outline" className="ml-2">
-            Sign In
+          <Button asChild size="sm" variant="outline" className="ml-2">
+            <Link to="/login">Login</Link>
           </Button>
           <Button size="sm">Get Started</Button>
         </nav>
