@@ -2,12 +2,25 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import type { User } from '@supabase/supabase-js';
 
+interface CreditTransaction {
+  id: string;
+  amount: number;
+  type: 'purchase' | 'usage' | 'bonus';
+  description: string;
+  created_at: string;
+}
+
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  credits: number;
+  creditHistory: CreditTransaction[];
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  addCredits: (amount: number, type: 'purchase' | 'usage' | 'bonus', description: string) => Promise<void>;
+  useCredits: (amount: number, description: string) => Promise<boolean>;
+  refreshCredits: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -15,17 +28,52 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [credits, setCredits] = useState(0);
+  const [creditHistory, setCreditHistory] = useState<CreditTransaction[]>([]);
+
+  const fetchUserCredits = async (userId: string) => {
+    try {
+      // Get current balance
+      const { data: balanceData, error: balanceError } = await supabase
+        .rpc('get_user_credit_balance', { user_id: userId });
+
+      if (balanceError) throw balanceError;
+      setCredits(balanceData || 0);
+
+      // Get credit history
+      const { data: historyData, error: historyError } = await supabase
+        .from('credits')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(10);
+
+      if (historyError) throw historyError;
+      setCreditHistory(historyData || []);
+    } catch (error) {
+      console.error('Error fetching credits:', error);
+    }
+  };
 
   useEffect(() => {
     // Check active sessions and sets the user
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        fetchUserCredits(session.user.id);
+      }
       setLoading(false);
     });
 
-    // Listen for changes on auth state (sign in, sign out, etc.)
+    // Listen for changes on auth state
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        fetchUserCredits(session.user.id);
+      } else {
+        setCredits(0);
+        setCreditHistory([]);
+      }
       setLoading(false);
     });
 
@@ -38,9 +86,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signUp = async (email: string, password: string) => {
-    console.log('Signing up with email:', email, 'and password:', password);
     const { error } = await supabase.auth.signUp({ email, password });
     if (error) throw error;
+
+    // Add welcome bonus credits
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      await addCredits(10, 'bonus', 'Welcome bonus credits');
+    }
   };
 
   const signOut = async () => {
@@ -48,12 +101,54 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (error) throw error;
   };
 
+  const addCredits = async (amount: number, type: 'purchase' | 'usage' | 'bonus', description: string) => {
+    if (!user) throw new Error('User must be logged in');
+
+    const { error } = await supabase
+      .from('credits')
+      .insert([
+        {
+          user_id: user.id,
+          amount,
+          type,
+          description,
+        },
+      ]);
+
+    if (error) throw error;
+    await refreshCredits();
+  };
+
+  const useCredits = async (amount: number, description: string): Promise<boolean> => {
+    if (!user) throw new Error('User must be logged in');
+    if (credits < amount) return false;
+
+    try {
+      await addCredits(-amount, 'usage', description);
+      return true;
+    } catch (error) {
+      console.error('Error using credits:', error);
+      return false;
+    }
+  };
+
+  const refreshCredits = async () => {
+    if (user) {
+      await fetchUserCredits(user.id);
+    }
+  };
+
   const value = {
     user,
     loading,
+    credits,
+    creditHistory,
     signIn,
     signUp,
     signOut,
+    addCredits,
+    useCredits,
+    refreshCredits,
   };
 
   return (

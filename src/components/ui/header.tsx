@@ -53,12 +53,20 @@ export default function Header() {
           </a>
           <div className="flex items-center space-x-4">
             {user ? (
-              <Button 
-                onClick={handleSignOut}
-                disabled={isSigningOut}
-              >
-                {isSigningOut ? "Signing out..." : "Sign out"}
-              </Button>
+              <>
+                <Link to="/generate">
+                  <Button variant="ghost">Generate</Button>
+                </Link>
+                <Link to="/account">
+                  <Button variant="ghost">Account</Button>
+                </Link>
+                <Button 
+                  onClick={handleSignOut}
+                  disabled={isSigningOut}
+                >
+                  {isSigningOut ? "Signing out..." : "Sign out"}
+                </Button>
+              </>
             ) : (
               <>
                 <Link to="/login">
@@ -98,10 +106,32 @@ export default function Header() {
               Contact
             </a>
             <div className="pt-2 space-y-2">
-              <Button variant="outline" className="w-full">
-                Sign In
-              </Button>
-              <Button className="w-full">Get Started</Button>
+              {user ? (
+                <>
+                  <Link to="/generate">
+                    <Button variant="outline" className="w-full">Generate</Button>
+                  </Link>
+                  <Link to="/account">
+                    <Button variant="outline" className="w-full">Account</Button>
+                  </Link>
+                  <Button 
+                    onClick={handleSignOut}
+                    disabled={isSigningOut}
+                    className="w-full"
+                  >
+                    {isSigningOut ? "Signing out..." : "Sign out"}
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login">
+                    <Button variant="outline" className="w-full">Sign in</Button>
+                  </Link>
+                  <Link to="/signup">
+                    <Button className="w-full">Sign up</Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
