@@ -1,0 +1,28 @@
+export default function Footer() {
+    const currentYear = new Date().getFullYear()
+  
+    return (
+      <footer className="bg-gray-50 border-t border-gray-200 py-8">
+        <div className="w-full mx-auto px-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center">
+            <div className="mb-4 sm:mb-0">
+              <span className="text-sm text-gray-600">© {currentYear} YourSaaS. All rights reserved.</span>
+            </div>
+  
+            <div className="flex space-x-6">
+              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">
+                Terms
+              </a>
+              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">
+                Privacy
+              </a>
+              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">
+                Contact
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    )
+  }
+  
