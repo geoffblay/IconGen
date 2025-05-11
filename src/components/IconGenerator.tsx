@@ -8,7 +8,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 export function IconGenerator() {
-  const { user, credits, decrementCredits } = useAuth();
+  const { user, credits, useCredits } = useAuth();
   const navigate = useNavigate();
   const [description, setDescription] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +33,10 @@ export function IconGenerator() {
 
     try {
       const svg = await generateIcon(description);
-      await decrementCredits();
+      const success = await useCredits(1, `Generated icon: ${description}`);
+      if (!success) {
+        throw new Error('Failed to use credits');
+      }
       setGeneratedSvg(svg);
     } catch (err) {
       setError('Failed to generate icon. Please try again.');

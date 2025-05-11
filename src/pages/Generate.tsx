@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -10,7 +10,7 @@ import { useAuth } from '../contexts/AuthContext';
 const DAILY_LIMIT = 3;
 
 export default function Generate() {
-  const { user, credits, decrementCredits } = useAuth();
+  const { user, credits, useCredits } = useAuth();
   const navigate = useNavigate();
   const [description, setDescription] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +34,7 @@ export default function Generate() {
       const svg = await generateIcon(description, !!user);
       setGeneratedSvg(svg);
       if (user) {
-        await decrementCredits();
+        await useCredits(1, `Generated icon: ${description}`);
       } else {
         setFreeGenerationsLeft(prev => Math.max(0, prev - 1));
       }
