@@ -57,20 +57,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Check active sessions and sets the user
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    console.log('Checking active session...');
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      console.log('Session check result:', { session, error });
       setUser(session?.user ?? null);
       if (session?.user) {
+        console.log('User found, fetching credits for:', session.user.id);
         fetchUserCredits(session.user.id);
       }
       setLoading(false);
     });
 
     // Listen for changes on auth state
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    console.log('Setting up auth state listener...');
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state changed:', { event, session });
       setUser(session?.user ?? null);
       if (session?.user) {
+        console.log('User authenticated, fetching credits for:', session.user.id);
         fetchUserCredits(session.user.id);
       } else {
+        console.log('No user session, resetting credits');
         setCredits(0);
         setCreditHistory([]);
       }
@@ -81,17 +88,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    console.log('Attempting sign in for:', email);
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    console.log('Sign in result:', { data, error });
     if (error) throw error;
   };
 
   const signUp = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({ email, password });
+    console.log('Attempting sign up for:', email);
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    console.log('Sign up result:', { data, error });
     if (error) throw error;
 
     // Add welcome bonus credits
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
+      console.log('Adding welcome bonus credits for:', user.id);
       await addCredits(10, 'bonus', 'Welcome bonus credits');
     }
   };
