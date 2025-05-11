@@ -43,6 +43,10 @@ export async function generateIcon(description: string, isAuthenticated: boolean
     const response = await openai.images.generate({
       model: "gpt-image-1",
       prompt: prompt,
+      output_format: "png",
+      background: "transparent",
+      quality: "high",
+      size: "1024x1024",
     });
 
     if (!response.data?.[0]?.b64_json) {

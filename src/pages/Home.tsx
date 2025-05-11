@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
-import Footer from '@/components/ui/footer';
 import PricingSection from '@/components/ui/pricing-section';
 
 export default function Home() {
