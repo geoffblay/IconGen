@@ -1,53 +1,84 @@
 import { Button } from "@/components/ui/button"
-import { Check } from "lucide-react"
+import { Check, X } from "lucide-react"
 
 export default function PricingSection() {
   const pricingTiers = [
     {
-      name: "Starter",
-      price: "$12",
-      period: "per month",
-      description: "Perfect for individuals and small projects",
-      features: ["Up to 5 projects", "1 GB storage", "Basic analytics", "24-hour support response time", "API access"],
+      name: "Free",
+      price: "$0",
+      period: "forever",
+      description: "Perfect for trying out our icon generator",
+      features: [
+        "3 free generations per day",
+        "Preview generated icons",
+        "Basic icon styles",
+      ],
+      nonFeatures: [
+        "No downloads",
+      ],
       cta: "Get Started",
       popular: false,
     },
     {
-      name: "Professional",
-      price: "$29",
+      name: "Basic",
+      price: "$9.99",
       period: "per month",
-      description: "Ideal for growing teams and businesses",
+      description: "Great for individuals and small projects",
       features: [
-        "Unlimited projects",
-        "10 GB storage",
-        "Advanced analytics",
-        "4-hour support response time",
-        "API access",
-        "Team collaboration tools",
-        "Custom integrations",
+        "50 icons per month",
+        "Download in PNG & SVG",
+        "All icon styles",
+        "Priority generation",
+        "Email support",
+        "Basic customization",
+        "No attribution required"
       ],
+      nonFeatures: [],
       cta: "Get Started",
       popular: true,
     },
     {
-      name: "Enterprise",
-      price: "$79",
+      name: "Pro",
+      price: "$19.99",
       period: "per month",
-      description: "For large organizations with advanced needs",
+      description: "Perfect for professionals and teams",
       features: [
-        "Unlimited projects",
-        "Unlimited storage",
-        "Premium analytics",
-        "1-hour support response time",
-        "Priority API access",
-        "Advanced team collaboration",
-        "Custom integrations",
+        "200 icons per month",
+        "Download in all formats",
+        "All icon styles",
+        "Priority generation",
+        "Priority support",
+        "Advanced customization",
+        "Batch generation",
+        "Icon collections",
+        "API access"
+      ],
+      nonFeatures: [],
+      cta: "Get Started",
+      popular: false,
+    },
+    {
+      name: "Enterprise",
+      price: "$49.99",
+      period: "per month",
+      description: "For large organizations and agencies",
+      features: [
+        "Unlimited icons",
+        "Download in all formats",
+        "All icon styles",
+        "Highest priority generation",
+        "24/7 support",
+        "Advanced customization",
+        "Batch generation",
+        "Icon collections",
+        "API access",
         "Dedicated account manager",
         "Custom contract",
+        "Team management"
       ],
       cta: "Contact Sales",
       popular: false,
-    },
+    }
   ]
 
   return (
@@ -93,6 +124,12 @@ export default function PricingSection() {
                     <li key={featureIndex} className="flex items-start">
                       <Check className="h-5 w-5 text-green-500 flex-shrink-0 mr-2" />
                       <span className="text-sm text-gray-700">{feature}</span>
+                    </li>
+                  ))}
+                  {(tier.nonFeatures || []).map((nonFeature, nonFeatureIndex) => (
+                    <li key={nonFeatureIndex} className="flex items-start">
+                      <X className="h-5 w-5 text-red-500 flex-shrink-0 mr-2" />
+                      <span className="text-sm text-gray-700">{nonFeature}</span>
                     </li>
                   ))}
                 </ul>
