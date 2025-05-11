@@ -7,6 +7,7 @@ import Generate from "./pages/Generate";
 import { AuthProvider } from './contexts/AuthContext'
 import './App.css'
 import Footer from "./components/ui/footer";
+import ProtectedRoute from './components/ProtectedRoute';
 // import About from "./pages/About";
 
 function App() {
@@ -20,9 +21,30 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/generate" element={<Generate />} />
+            <Route
+              path="/login"
+              element={
+                <ProtectedRoute requireAuth={false}>
+                  <Login />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <ProtectedRoute requireAuth={false}>
+                  <Signup />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/generate"
+              element={
+                <ProtectedRoute>
+                  <Generate />
+                </ProtectedRoute>
+              }
+            />
             {/* <Route path="/about" element={<About />} /> */}
           </Routes>
         </main>

@@ -3,10 +3,26 @@
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../../contexts/AuthContext"
 
 export default function Header() {
+  const { user, signOut } = useAuth()
+  const navigate = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isSigningOut, setIsSigningOut] = useState(false)
+
+  const handleSignOut = async () => {
+    try {
+      setIsSigningOut(true)
+      await signOut()
+      navigate("/")
+    } catch (error) {
+      console.error("Error signing out:", error)
+    } finally {
+      setIsSigningOut(false)
+    }
+  }
 
   return (
     <header className="w-full border-b bg-white">
@@ -35,12 +51,25 @@ export default function Header() {
           <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-900">
             Contact
           </a>
-          <Button asChild size="sm" variant="outline" className="ml-2">
-            <Link to="/login">Login</Link>
-          </Button>
-          <Button asChild size="sm">
-            <Link to="/signup">Get Started</Link>
-          </Button>
+          <div className="flex items-center space-x-4">
+            {user ? (
+              <Button 
+                onClick={handleSignOut}
+                disabled={isSigningOut}
+              >
+                {isSigningOut ? "Signing out..." : "Sign out"}
+              </Button>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="ghost">Sign in</Button>
+                </Link>
+                <Link to="/signup">
+                  <Button>Sign up</Button>
+                </Link>
+              </>
+            )}
+          </div>
         </nav>
 
         {/* Mobile Menu Button */}
