@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       // Get current balance
       const { data: balanceData, error: balanceError } = await supabase
-        .rpc('get_user_credit_balance', { user_id: userId });
+        .rpc('get_user_credit_balance', { p_user_id: userId });
 
       if (balanceError) throw balanceError;
       setCredits(balanceData || 0);
