@@ -1,6 +1,7 @@
 // Remove all imports and unused code
 export async function generateIcon(description: string): Promise<string> {
   console.log('Sending request to generate icon:', description);
+  console.log('Environment:', process.env.NODE_ENV);
   try {
     const response = await fetch('/api/generate-icon', {
       method: 'POST',

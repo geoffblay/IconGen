@@ -86,7 +86,7 @@ export default function Signup() {
                 Sign in
               </button>
             </p>
-          </div>
+      </div>
         </form>
       </Card>
     </div>

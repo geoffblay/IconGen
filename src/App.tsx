@@ -14,14 +14,14 @@ import ProtectedRoute from './components/ProtectedRoute';
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        {/* Header shows on every page */}
-        <Header />
+    <Router>
+      {/* Header shows on every page */}
+      <Header />
 
-        {/* Main content changes based on route */}
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
+      {/* Main content changes based on route */}
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
             <Route
               path="/login"
               element={
@@ -54,12 +54,12 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            {/* <Route path="/about" element={<About />} /> */}
-          </Routes>
-        </main>
+          {/* <Route path="/about" element={<About />} /> */}
+        </Routes>
+      </main>
 
         <Footer />
-      </Router>
+    </Router>
     </AuthProvider>
   );
 }
