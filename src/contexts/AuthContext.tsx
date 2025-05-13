@@ -117,6 +117,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const addCredits = async (amount: number, type: 'purchase' | 'usage' | 'bonus', description: string) => {
     if (!user) throw new Error('User must be logged in');
 
+    console.log('user:', user);
+    const session = await supabase.auth.getSession();
+    console.log('session:', session);
+
+
     const { error } = await supabase
       .from('credits')
       .insert([
