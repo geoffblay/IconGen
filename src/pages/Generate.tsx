@@ -6,6 +6,7 @@ import { Label } from '../components/ui/label';
 import { Card } from '../components/ui/card';
 import { generateIcon } from '../lib/openai';
 import { useAuth } from '../contexts/AuthContext';
+import ImageTracer from 'imagetracerjs';
 
 const DAILY_LIMIT = 3;
 
@@ -46,13 +47,60 @@ export default function Generate() {
     }
   };
 
-  const handleDownload = () => {
+  const handleDownloadPng = () => {
     if (!user) {
       navigate('/signup');
       return;
     }
-    // TODO: Implement download functionality
+  
+    const link = document.createElement('a');
+    link.href = `data:image/png;base64,${generatedPng}`;
+    link.download = 'icon.png';
+    link.click();
   };
+  
+  const handleDownloadSvg = () => {
+    if (!generatedPng) return;
+  
+    const img = new Image();
+    img.src = `data:image/png;base64,${generatedPng}`;
+  
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+  
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+  
+      ctx.drawImage(img, 0, 0);
+  
+      const imageData = ctx.getImageData(0, 0, img.width, img.height);
+  
+      const svgString = ImageTracer.imagedataToSVG(imageData, {
+        pathomit: 8,        // Simplify small paths
+        numberofcolors: 2,  // Black & White SVG
+        blurradius: 0,      // No blur
+        ltres: 1,           // Line resolution
+        qtres: 1            // Curve resolution
+      });
+  
+      const blob = new Blob([svgString], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+  
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'icon.svg';
+      link.click();
+  
+      URL.revokeObjectURL(url);
+    };
+  
+    img.onerror = (err) => {
+      console.error('Failed to load image for SVG conversion:', err);
+    };
+  };
+  
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -116,9 +164,14 @@ export default function Generate() {
                 </div>
                 <div className="mt-4">
                   {user ? (
-                    <Button onClick={handleDownload}>
-                      Download Icon
-                    </Button>
+                    <div className="flex space-x-4">
+                      <Button onClick={handleDownloadPng}>
+                        Download PNG
+                      </Button>
+                      <Button onClick={handleDownloadSvg} variant="outline">
+                        Download SVG
+                      </Button>
+                    </div>
                   ) : (
                     <div className="text-center">
                       <p className="text-gray-600 mb-4">
