@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 export default function CancelPage() {
   return (
@@ -10,7 +10,7 @@ export default function CancelPage() {
           Your payment was cancelled. No charges were made to your account.
         </p>
         <div className="pt-4">
-          <Link href="/">
+          <Link to="/">
             <Button>Return to Home</Button>
           </Link>
         </div>
