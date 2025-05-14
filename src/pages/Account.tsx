@@ -68,7 +68,13 @@ export default function Account() {
               <span className="text-gray-600">credits</span>
             </div>
             <div className="mt-4">
-              <Button onClick={() => navigate('/pricing')}>
+              <Button onClick={() => {
+                navigate('/');
+                // Use setTimeout to ensure the navigation completes before scrolling
+                setTimeout(() => {
+                  document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }}>
                 Buy Credits
               </Button>
             </div>

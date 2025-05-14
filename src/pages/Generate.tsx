@@ -14,7 +14,7 @@ export default function Generate() {
   const navigate = useNavigate();
   const [description, setDescription] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [generatedSvg, setGeneratedSvg] = useState<string | null>(null);
+  const [generatedPng, setGeneratedPng] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [freeGenerationsLeft, setFreeGenerationsLeft] = useState(DAILY_LIMIT);
 
@@ -31,8 +31,8 @@ export default function Generate() {
     setError(null);
 
     try {
-      const svg = await generateIcon(description);
-      setGeneratedSvg(svg);
+      const png = await generateIcon(description);
+      setGeneratedPng(png);
       if (user) {
         await useCredits(1, `Generated icon: ${description}`);
       } else {
@@ -104,12 +104,12 @@ export default function Generate() {
               </div>
             )}
 
-            {generatedSvg && (
+            {generatedPng && (
               <div className="mt-6">
                 <h3 className="text-lg font-semibold mb-2">Generated Icon</h3>
                 <div className="w-full aspect-square bg-white rounded-lg p-4">
                   <img 
-                    src={`data:image/png;base64,${generatedSvg}`}
+                    src={`data:image/png;base64,${generatedPng}`}
                     alt="Generated icon"
                     className="w-full h-full object-contain"
                   />

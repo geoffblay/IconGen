@@ -1,7 +1,12 @@
 import { Button } from "@/components/ui/button"
 import { Check, X } from "lucide-react"
+import { CheckoutButton } from "@/components/CheckoutButton"
+// import CheckoutButton from "../CheckoutButton";
+import { useNavigate } from "react-router-dom"
 
 export default function PricingSection() {
+  const navigate = useNavigate();
+
   const pricingTiers = [
     {
       name: "Free",
@@ -19,6 +24,7 @@ export default function PricingSection() {
       ],
       cta: "Get Started",
       popular: false,
+      isFree: true,
     },
     {
       name: "Starter Pack",
@@ -36,6 +42,7 @@ export default function PricingSection() {
       nonFeatures: [],
       cta: "Buy Credits",
       popular: true,
+      isFree: false,
     },
     {
       name: "Pro Pack",
@@ -53,6 +60,7 @@ export default function PricingSection() {
       nonFeatures: [],
       cta: "Buy Credits",
       popular: false,
+      isFree: false,
     },
   ]
 
@@ -86,12 +94,22 @@ export default function PricingSection() {
                 <div className="mt-2 text-lg font-medium text-gray-900">{tier.credits}</div>
                 <p className="mt-2 text-gray-600">{tier.description}</p>
 
-                <Button
-                  className={`mt-6 w-full ${tier.popular ? "bg-blue-500 hover:bg-blue-600" : ""}`}
-                  variant={tier.popular ? "default" : "outline"}
-                >
-                  {tier.cta}
-                </Button>
+                {tier.isFree ? (
+                  <Button
+                    className="mt-6 w-full"
+                    variant="outline"
+                    onClick={() => navigate('/generate')}
+                  >
+                    {tier.cta}
+                  </Button>
+                ) : (
+                  <CheckoutButton
+                    className={`mt-6 w-full ${tier.popular ? "bg-blue-500 hover:bg-blue-600" : ""}`}
+                    variant={tier.popular ? "default" : "outline"}
+                  >
+                    {tier.cta}
+                  </CheckoutButton>
+                )}
               </div>
 
               <div className="p-6 border-t border-gray-100">
