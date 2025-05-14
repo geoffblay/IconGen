@@ -12,7 +12,7 @@ export function IconGenerator() {
   const navigate = useNavigate();
   const [description, setDescription] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [generatedSvg, setGeneratedSvg] = useState<string | null>(null);
+  const [generatedPng, setGeneratedPng] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -32,12 +32,12 @@ export function IconGenerator() {
     setError(null);
 
     try {
-      const svg = await generateIcon(description);
+      const png = await generateIcon(description);
       const success = await useCredits(1, `Generated icon: ${description}`);
       if (!success) {
         throw new Error('Failed to use credits');
       }
-      setGeneratedSvg(svg);
+      setGeneratedPng(png);
     } catch (err) {
       setError('Failed to generate icon. Please try again.');
       console.error(err);
@@ -84,12 +84,12 @@ export function IconGenerator() {
         </div>
       )}
 
-      {generatedSvg && (
+      {generatedPng && (
         <div className="mt-6">
           <h3 className="text-lg font-semibold mb-2">Generated Icon</h3>
           <div 
             className="w-full aspect-square bg-white rounded-lg p-4"
-            dangerouslySetInnerHTML={{ __html: generatedSvg }}
+            dangerouslySetInnerHTML={{ __html: generatedPng }}
           />
         </div>
       )}
