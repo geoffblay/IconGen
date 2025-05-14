@@ -11,11 +11,10 @@ export default function PricingSection() {
     {
       name: "Free",
       price: "$0",
-      credits: "3 credits",
-      period: "per day",
+      credits: "5 credits",
       description: "Perfect for trying out our icon generator",
       features: [
-        "3 free generations per day",
+        "5 FREE icon generations",
         "Preview generated icons",
         "Basic icon styles",
       ],
