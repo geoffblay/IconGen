@@ -34,10 +34,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Use mock response if USE_MOCK_RESPONSE is set to 'true'
-    if (process.env.USE_MOCK_RESPONSE === 'true') {
-      console.log('Using mock response');
-      return res.status(200).json({ png: Buffer.from(mockPng).toString('base64') });
-    }
+    // if (process.env.USE_MOCK_RESPONSE === 'true') {
+    //   console.log('Using mock response');
+    //   return res.status(200).json({ png: Buffer.from(mockPng).toString('base64') });
+    // }
 
     const prompt = `Create a simple, minimalist vector-style icon of ${description}. The icon should be black with a white background and be suitable for use in a user interface. Use clean lines and simple shapes.`;
     console.log('Using prompt:', prompt);

@@ -155,11 +155,11 @@ export default function Generate() {
             {generatedPng && (
               <div className="mt-6">
                 <h3 className="text-lg font-semibold mb-2">Generated Icon</h3>
-                <div className="w-full aspect-square bg-white rounded-lg p-4">
+                <div className="flex justify-center w-full bg-white rounded-lg p-4">
                   <img 
                     src={`data:image/png;base64,${generatedPng}`}
                     alt="Generated icon"
-                    className="w-full h-full object-contain"
+                    className="w-1/2 object-contain"
                   />
                 </div>
                 <div className="mt-4">
