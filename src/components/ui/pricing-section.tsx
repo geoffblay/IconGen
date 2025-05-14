@@ -28,7 +28,7 @@ export default function PricingSection() {
     },
     {
       name: "Starter Pack",
-      price: "$9.99",
+      price: "$4.99",
       credits: "50 credits",
       period: "one-time",
       description: "Great for small projects",
@@ -46,12 +46,12 @@ export default function PricingSection() {
     },
     {
       name: "Pro Pack",
-      price: "$19.99",
-      credits: "120 credits",
+      price: "$9.99",
+      credits: "110 credits",
       period: "one-time",
       description: "Perfect for larger projects",
       features: [
-        "120 icon generations",
+        "110 icon generations",
         "Download in all formats",
         "All icon styles",
         "Priority generation",
