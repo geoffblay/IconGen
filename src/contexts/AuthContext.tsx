@@ -93,6 +93,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     console.log('Sign in result:', { data, error });
     if (error) throw error;
+
+    // Check if user has received a bonus credit
+    const { data: bonusData, error: bonusError } = await supabase
+      .from('credits')
+      .select('*')
+      .eq('user_id', data.user.id)
+      .eq('type', 'bonus')
+      .limit(1);
+
+    if (bonusError) throw bonusError;
+    if (bonusData && bonusData.length === 0) {
+      await addCredits(5, 'bonus', 'Welcome bonus credits');
+    }
+    
   };
 
   const signUp = async (email: string, password: string) => {
