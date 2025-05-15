@@ -103,9 +103,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // Add welcome bonus credits
     const { data: { user } } = await supabase.auth.getUser();
+    console.log('user from signup in authcontext:', user);
     if (user) {
       console.log('Adding welcome bonus credits for:', user.id);
-      await addCredits(10, 'bonus', 'Welcome bonus credits');
+      await addCredits(5, 'bonus', 'Welcome bonus credits');
     }
   };
 

@@ -35,7 +35,7 @@ export default function Signup() {
       <Card className="w-full max-w-md p-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900">Create an account</h2>
-          <p className="mt-2 text-gray-600">Get 10 free credits when you sign up</p>
+          <p className="mt-2 text-gray-600">Get 5 free credits when you sign up!</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
