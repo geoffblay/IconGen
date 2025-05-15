@@ -7,8 +7,8 @@ import { Card } from '../components/ui/card';
 import { generateIcon } from '../lib/openai';
 import { useAuth } from '../contexts/AuthContext';
 import ImageTracer from 'imagetracerjs';
+import { supabase } from '@/lib/supabase';
 
-const DAILY_LIMIT = 3;
 
 export default function Generate() {
   const { user, credits, useCredits } = useAuth();
@@ -17,14 +17,28 @@ export default function Generate() {
   const [isLoading, setIsLoading] = useState(false);
   const [generatedPng, setGeneratedPng] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [freeGenerationsLeft, setFreeGenerationsLeft] = useState(DAILY_LIMIT);
+  const [hasPurchasedCredits, setHasPurchasedCredits] = useState(false);
 
+  // check if user has purchased credits in the past
   useEffect(() => {
-    if (!user) {
-      const count = parseInt(localStorage.getItem('icon_generation_count') || '0');
-      setFreeGenerationsLeft(Math.max(0, DAILY_LIMIT - count));
-    }
+    const checkPurchaseHistory = async () => {
+      if (!user) return;
+      
+      const { data, error } = await supabase
+        .from('credits')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('type', 'purchase')
+        .limit(1);
+
+      if (!error && data) {
+        setHasPurchasedCredits(data.length > 0);
+      }
+    };
+
+    checkPurchaseHistory();
   }, [user]);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,11 +48,7 @@ export default function Generate() {
     try {
       const png = await generateIcon(description);
       setGeneratedPng(png);
-      if (user) {
-        await useCredits(1, `Generated icon: ${description}`);
-      } else {
-        setFreeGenerationsLeft(prev => Math.max(0, prev - 1));
-      }
+      await useCredits(1, `Generated icon: ${description}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to generate icon. Please try again.');
       console.error(err);
@@ -116,15 +126,9 @@ export default function Generate() {
 
         <div className="flex justify-center">
           <Card className="w-full max-w-2xl p-6">
-            {user ? (
-              <div className="mb-4 text-sm text-gray-600">
-                Credits remaining: {credits}
-              </div>
-            ) : (
-              <div className="mb-4 text-sm text-gray-600">
-                Free generations remaining today: {freeGenerationsLeft}
-              </div>
-            )}
+            <div className="mb-4 text-sm text-gray-600">
+              Credits remaining: {credits}
+            </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
@@ -135,12 +139,13 @@ export default function Generate() {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   required
-                  disabled={user ? credits <= 0 : freeGenerationsLeft <= 0}
+                  // disabled={user ? credits <= 0 : freeGenerationsLeft <= 0}
+                  disabled={credits <= 0}
                 />
               </div>
               <Button 
                 type="submit" 
-                disabled={isLoading || (user ? credits <= 0 : freeGenerationsLeft <= 0)}
+                disabled={isLoading || (credits <= 0)}
               >
                 {isLoading ? 'Generating...' : 'Generate Icon'}
               </Button>
@@ -155,15 +160,28 @@ export default function Generate() {
             {generatedPng && (
               <div className="mt-6">
                 <h3 className="text-lg font-semibold mb-2">Generated Icon</h3>
-                <div className="flex justify-center w-full bg-white rounded-lg p-4">
+                <div className="flex justify-center w-full bg-white rounded-lg p-4 relative">
                   <img 
                     src={`data:image/png;base64,${generatedPng}`}
                     alt="Generated icon"
-                    className="w-1/2 object-contain"
+                    className="w-1/2 object-contain select-none pointer-events-none"
+                    onContextMenu={(e) => !hasPurchasedCredits && e.preventDefault()}
+                    onDragStart={(e) => !hasPurchasedCredits && e.preventDefault()}
                   />
+                  {!hasPurchasedCredits && (
+                    <div 
+                      className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                      style={{ userSelect: 'none' }}
+                    >
+                      <div className="absolute inset-0 bg-white/30"></div>
+                      <div className="text-2xl font-bold text-gray-400 transform -rotate-45 select-none">
+                        PREVIEW
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="mt-4">
-                  {user ? (
+                  {hasPurchasedCredits ? (
                     <div className="flex space-x-4">
                       <Button onClick={handleDownloadPng}>
                         Download PNG
@@ -175,10 +193,16 @@ export default function Generate() {
                   ) : (
                     <div className="text-center">
                       <p className="text-gray-600 mb-4">
-                        Sign up to download your icon and get 10 free credits!
+                        Purchase credits to download your icon!
                       </p>
-                      <Button onClick={() => navigate('/signup')}>
-                        Sign Up to Download
+                      <Button onClick={() => {
+                        navigate('/');
+                        // Use setTimeout to ensure the navigation completes before scrolling
+                        setTimeout(() => {
+                          document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+                        }, 100);
+                      }}>
+                        View Pricing
                       </Button>
                     </div>
                   )}

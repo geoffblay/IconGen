@@ -106,7 +106,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (bonusData && bonusData.length === 0) {
       await addCredits(5, 'bonus', 'Welcome bonus credits');
     }
-    
   };
 
   const signUp = async (email: string, password: string) => {
