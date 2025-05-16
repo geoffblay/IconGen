@@ -21,7 +21,7 @@ export default function Signup() {
 
     try {
       await signUp(email, password);
-      navigate('/generate');
+      navigate('/confirm-email');
     } catch (err) {
       setError('Failed to create account. Please try again.');
       console.error(err);

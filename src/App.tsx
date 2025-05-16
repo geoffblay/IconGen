@@ -13,6 +13,7 @@ import Footer from "./components/ui/footer";
 import ProtectedRoute from './components/ProtectedRoute';
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Contact from "./pages/Contact";
+import ConfirmEmail from "./pages/ConfirmEmail";
 // import About from "./pages/About";
 
 function App() {
@@ -40,6 +41,12 @@ function App() {
                 <ProtectedRoute requireAuth={false}>
                   <Signup />
                 </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/confirm-email"
+              element={
+                <ConfirmEmail />
               }
             />
             <Route
