@@ -5,13 +5,6 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Mock SVG for development/testing
-// const mockSvg = `<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
-//   <rect width="1024" height="1024" fill="white"/>
-//   <circle cx="512" cy="512" r="384" stroke="black" stroke-width="32"/>
-//   <path d="M512 256v512M256 512h512" stroke="black" stroke-width="32"/>
-// </svg>`;
-
 // Mock PNG for development/testing
 const mockPng = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=`;
 
