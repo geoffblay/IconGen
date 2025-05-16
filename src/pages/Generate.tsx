@@ -23,7 +23,7 @@ export default function Generate() {
   useEffect(() => {
     const checkPurchaseHistory = async () => {
       if (!user) return;
-      
+
       const { data, error } = await supabase
         .from('credits')
         .select('*')
@@ -62,31 +62,31 @@ export default function Generate() {
       navigate('/signup');
       return;
     }
-  
+
     const link = document.createElement('a');
     link.href = `data:image/png;base64,${generatedPng}`;
     link.download = 'icon.png';
     link.click();
   };
-  
+
   const handleDownloadSvg = () => {
     if (!generatedPng) return;
-  
+
     const img = new Image();
     img.src = `data:image/png;base64,${generatedPng}`;
-  
+
     img.onload = () => {
       const canvas = document.createElement('canvas');
       canvas.width = img.width;
       canvas.height = img.height;
-  
+
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
-  
+
       ctx.drawImage(img, 0, 0);
-  
+
       const imageData = ctx.getImageData(0, 0, img.width, img.height);
-  
+
       const svgString = ImageTracer.imagedataToSVG(imageData, {
         pathomit: 8,        // Simplify small paths
         numberofcolors: 2,  // Black & White SVG
@@ -94,23 +94,23 @@ export default function Generate() {
         ltres: 1,           // Line resolution
         qtres: 1            // Curve resolution
       });
-  
+
       const blob = new Blob([svgString], { type: 'image/svg+xml' });
       const url = URL.createObjectURL(blob);
-  
+
       const link = document.createElement('a');
       link.href = url;
       link.download = 'icon.svg';
       link.click();
-  
+
       URL.revokeObjectURL(url);
     };
-  
+
     img.onerror = (err) => {
       console.error('Failed to load image for SVG conversion:', err);
     };
   };
-  
+
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -143,12 +143,37 @@ export default function Generate() {
                   disabled={credits <= 0}
                 />
               </div>
-              <Button 
-                type="submit" 
-                disabled={isLoading || (credits <= 0)}
-              >
-                {isLoading ? 'Generating...' : 'Generate Icon'}
-              </Button>
+              <div className="flex items-center space-x-2">
+                <Button
+                  type="submit"
+                  disabled={isLoading || (credits <= 0)}
+                >
+                  {isLoading ? 'Generating...' : 'Generate Icon'}
+                  {isLoading && (
+                    <svg
+                      className="animate-spin h-5 w-5 ml-2 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                      ></path>
+                    </svg>
+                  )}
+                </Button>
+                {isLoading && <p className="text-sm text-gray-600">This could take a minute...</p>}
+              </div>
             </form>
 
             {error && (
@@ -161,7 +186,7 @@ export default function Generate() {
               <div className="mt-6">
                 <h3 className="text-lg font-semibold mb-2">Generated Icon</h3>
                 <div className="flex justify-center w-full bg-white rounded-lg p-4 relative">
-                  <img 
+                  <img
                     src={`data:image/png;base64,${generatedPng}`}
                     alt="Generated icon"
                     className="w-1/2 object-contain select-none pointer-events-none"
@@ -169,7 +194,7 @@ export default function Generate() {
                     onDragStart={(e) => !hasPurchasedCredits && e.preventDefault()}
                   />
                   {!hasPurchasedCredits && (
-                    <div 
+                    <div
                       className="absolute inset-0 flex items-center justify-center pointer-events-none"
                       style={{ userSelect: 'none' }}
                     >
