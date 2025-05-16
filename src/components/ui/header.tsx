@@ -29,6 +29,7 @@ export default function Header() {
       <div className="w-full mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <div className="flex items-center">
+          <img src="/favicon-96x96.png" alt="IconGen" className="w-8 h-8 mr-2" />
           <Link to="/" className="text-xl font-bold">
             IconGen
           </Link>
