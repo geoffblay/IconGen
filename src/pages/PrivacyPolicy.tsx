@@ -44,9 +44,6 @@ export default function PrivacyPolicy() {
                     <ul className="list-disc list-inside mb-4">
                         <li>Email: <a href="mailto:support@icongen.dev" className="text-blue-600 underline">support@icongen.dev</a></li>
                     </ul>
-                    <p>
-                        For all other inquiries, please visit our Contact Us page on the Website.
-                    </p>
                     <p className="text-center text-gray-500 mt-8">
                         By using IconGen, you consent to the terms of this Privacy Policy.
                     </p>

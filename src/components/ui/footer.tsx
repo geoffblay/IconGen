@@ -12,9 +12,7 @@ export default function Footer() {
   
             <div className="flex space-x-6">
               <Link to="/privacy-policy" className="text-sm text-gray-600 hover:text-gray-900">Privacy Policy</Link>
-              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">
-                Contact
-              </a>
+              <Link to="/contact" className="text-sm text-gray-600 hover:text-gray-900">Contact</Link>
             </div>
           </div>
         </div>
