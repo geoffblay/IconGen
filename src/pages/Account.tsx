@@ -2,7 +2,6 @@ import { useAuth } from '../contexts/AuthContext';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
 
 export default function Account() {
   const { user, credits, creditHistory } = useAuth();
