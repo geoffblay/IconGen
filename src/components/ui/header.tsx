@@ -76,32 +76,38 @@ export default function Header() {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="container mx-auto px-4 py-3 space-y-3">
-            <a href="#" className="block text-sm font-medium text-gray-700 hover:text-gray-900 py-2">
+            <Link to="/" className="block text-sm font-medium text-gray-700 hover:text-gray-900 py-2" onClick={() => setIsMenuOpen(false)}>
               Home
-            </a>
-            <a href="#" className="block text-sm font-medium text-gray-700 hover:text-gray-900 py-2">
-              Features
-            </a>
-            <a href="#" className="block text-sm font-medium text-gray-700 hover:text-gray-900 py-2">
+            </Link>
+            <Link to="/generate" className="block text-sm font-medium text-gray-700 hover:text-gray-900 py-2" onClick={() => setIsMenuOpen(false)}>
+              Generate
+            </Link>
+            {user && (
+              <Link to="/account" className="block text-sm font-medium text-gray-700 hover:text-gray-900 py-2" onClick={() => setIsMenuOpen(false)}>
+                Account
+              </Link>
+            )}
+            <a
+              onClick={() => {
+                setIsMenuOpen(false);
+                navigate('/');
+                // Use setTimeout to ensure the navigation completes before scrolling
+                setTimeout(() => {
+                  document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }}
+              className="block text-sm font-medium text-gray-700 hover:text-gray-900 py-2 hover:cursor-pointer"
+            >
               Pricing
             </a>
-            <a href="#" className="block text-sm font-medium text-gray-700 hover:text-gray-900 py-2">
-              Blog
-            </a>
-            <a href="#" className="block text-sm font-medium text-gray-700 hover:text-gray-900 py-2">
-              Contact
-            </a>
+            <Link to="/privacy-policy" className="block text-sm font-medium text-gray-700 hover:text-gray-900 py-2" onClick={() => setIsMenuOpen(false)}>
+              Privacy Policy
+            </Link>
             <div className="pt-2 space-y-2">
               {user ? (
                 <>
-                  <Link to="/generate">
-                    <Button variant="outline" className="w-full">Generate</Button>
-                  </Link>
-                  <Link to="/account">
-                    <Button variant="outline" className="w-full">Account</Button>
-                  </Link>
                   <Button 
-                    onClick={handleSignOut}
+                    onClick={() => { handleSignOut(); setIsMenuOpen(false); }}
                     disabled={isSigningOut}
                     className="w-full"
                   >
@@ -111,10 +117,10 @@ export default function Header() {
               ) : (
                 <>
                   <Link to="/login">
-                    <Button variant="outline" className="w-full">Sign in</Button>
+                    <Button variant="outline" className="w-full" onClick={() => setIsMenuOpen(false)}>Sign in</Button>
                   </Link>
                   <Link to="/signup">
-                    <Button className="w-full">Sign up</Button>
+                    <Button className="w-full" onClick={() => setIsMenuOpen(false)}>Sign up</Button>
                   </Link>
                 </>
               )}
