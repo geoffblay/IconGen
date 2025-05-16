@@ -126,21 +126,21 @@ export default function Generate() {
 
         <div className="flex justify-center">
           <Card className="w-full max-w-2xl p-6">
-            <div className="mb-4 text-sm text-gray-600">
+            <div className="mb-4 text-sm text-gray-600 pl-1">
               Credits remaining: {credits}
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="description">Describe your icon</Label>
+                <Label className="pl-1" htmlFor="description">Describe your icon</Label>
                 <Input
                   id="description"
                   placeholder="e.g., a car driving on a road, a human figure waving"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   required
-                  // disabled={user ? credits <= 0 : freeGenerationsLeft <= 0}
                   disabled={credits <= 0}
+                  className="mt-2"
                 />
               </div>
               <div className="flex items-center space-x-2">
@@ -175,6 +175,25 @@ export default function Generate() {
                 {isLoading && <p className="text-sm text-gray-600">This could take a minute...</p>}
               </div>
             </form>
+
+            {credits <= 0 && (
+              <div className="mt-6">
+                <p className="text-red-400 mb-2 font-semibold pl-1">
+                  Oh no! You have no credits left. 
+                </p>
+                <Button
+                  onClick={() => {
+                    navigate('/');
+                    setTimeout(() => {
+                      document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                  }}
+                  variant="outline"
+                >
+                  Buy More Credits
+                </Button>
+              </div>
+            )}
 
             {error && (
               <div className="mt-4 text-red-500">
