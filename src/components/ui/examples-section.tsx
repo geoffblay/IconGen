@@ -24,7 +24,7 @@ export default function ExamplesSection() {
   ]
 
   return (
-    <section className="py-16 mt-24">
+    <section className="bg-gradient-to-b from-purple-50 to-white py-16 pt-24">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900">See it in action</h2>
