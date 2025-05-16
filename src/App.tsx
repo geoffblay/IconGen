@@ -11,6 +11,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import './App.css'
 import Footer from "./components/ui/footer";
 import ProtectedRoute from './components/ProtectedRoute';
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 // import About from "./pages/About";
 
 function App() {
@@ -38,6 +39,12 @@ function App() {
                 <ProtectedRoute requireAuth={false}>
                   <Signup />
                 </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/privacy-policy"
+              element={
+                <PrivacyPolicy />
               }
             />
             <Route
