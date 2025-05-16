@@ -1,27 +1,30 @@
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 export default function ExamplesSection() {
+  const navigate = useNavigate();
+
   const examples = [
     {
-      title: "Streamlined Workflow",
-      description: "Automate repetitive tasks and streamline your team's workflow with our intuitive interface.",
-      imageUrl: "src/assets/star.svg",
+      title: "Add branding",
+      description: "'A minimalist rocket ship icon for a tech startup'",
+      imageUrl: "src/assets/rocket.png",
     },
     {
-      title: "Data Visualization",
-      description: "Transform complex data into clear, actionable insights with powerful visualization tools.",
-      imageUrl: "src/assets/star.svg",
+      title: "Stand out",
+      description: "'Abstract flame for a fitness brand'",
+      imageUrl: "src/assets/flame.png",
     },
     {
-      title: "Team Collaboration",
-      description: "Enable seamless collaboration across departments with real-time updates and shared workspaces.",
-      imageUrl: "src/assets/star.svg",
+      title: "Make it fun",
+      description: "'A cute avocado icon with friendly face'",
+      imageUrl: "src/assets/avocado.png",
     },
   ]
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 mt-24">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900">See it in action</h2>
@@ -40,14 +43,18 @@ export default function ExamplesSection() {
                 <img
                   src={example.imageUrl || "/placeholder.svg"}
                   alt={example.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain bg-white"
                 />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">{example.title}</h3>
                 <p className="text-gray-600 mb-4">{example.description}</p>
-                <Button variant="ghost" className="group text-sm p-0 h-auto">
-                  Learn more
+                <Button 
+                  variant="ghost" 
+                  className="group text-sm p-0 h-auto"
+                  onClick={() => navigate('/generate')}
+                >
+                  Try it out!
                   <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </div>

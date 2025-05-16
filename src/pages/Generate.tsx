@@ -89,7 +89,7 @@ export default function Generate() {
 
       const svgString = ImageTracer.imagedataToSVG(imageData, {
         pathomit: 8,        // Simplify small paths
-        numberofcolors: 2,  // Black & White SVG
+        pal: [{r: 0, g: 0, b: 0}, {r: 255, g: 255, b: 255}],
         blurradius: 0,      // No blur
         ltres: 1,           // Line resolution
         qtres: 1            // Curve resolution
