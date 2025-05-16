@@ -4,7 +4,7 @@ import { Button } from '../components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
 export default function Account() {
-  const { user, credits, creditHistory } = useAuth();
+  const { user, credits, creditHistory, signOut } = useAuth();
   const navigate = useNavigate();
 
   if (!user) {
@@ -35,18 +35,22 @@ export default function Account() {
   };
 
   const handleDeleteAccount = async () => {
-    // call the api/delete-account.ts endpoint
-    const response = await fetch('/api/delete-account', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: user.id }),
-    });
+    if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+      await signOut();
 
-    if (response.ok) {
-      alert('Account deleted successfully.');
-      window.location.href = '/';
-    } else {
-      alert('Failed to delete account. Please contact support.');
+      // call the api/delete-account.ts endpoint
+      const response = await fetch('/api/delete-account', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.id }),
+      });
+
+      if (response.ok) {
+        alert('Account deleted successfully.');
+        window.location.href = '/';
+      } else {
+        alert('Failed to delete account. Please contact support.');
+      }
     }
   };
 
