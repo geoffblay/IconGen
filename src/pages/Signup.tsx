@@ -21,7 +21,7 @@ export default function Signup() {
 
     try {
       await signUp(email, password);
-      navigate('/generate');
+      navigate('/confirm-email');
     } catch (err) {
       setError('Failed to create account. Please try again.');
       console.error(err);
@@ -31,11 +31,11 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md p-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900">Create an account</h2>
-          <p className="mt-2 text-gray-600">Get 10 free credits when you sign up</p>
+          <p className="mt-2 text-gray-600">Get 5 free credits when you sign up!</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">

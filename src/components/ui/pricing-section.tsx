@@ -1,16 +1,20 @@
 import { Button } from "@/components/ui/button"
 import { Check, X } from "lucide-react"
+import { CheckoutButton } from "@/components/CheckoutButton"
+// import CheckoutButton from "../CheckoutButton";
+import { useNavigate } from "react-router-dom"
 
 export default function PricingSection() {
+  const navigate = useNavigate();
+
   const pricingTiers = [
     {
       name: "Free",
       price: "$0",
-      credits: "3 credits",
-      period: "per day",
+      credits: "5 credits",
       description: "Perfect for trying out our icon generator",
       features: [
-        "3 free generations per day",
+        "5 FREE icon generations",
         "Preview generated icons",
         "Basic icon styles",
       ],
@@ -19,10 +23,11 @@ export default function PricingSection() {
       ],
       cta: "Get Started",
       popular: false,
+      isFree: true,
     },
     {
       name: "Starter Pack",
-      price: "$9.99",
+      price: "$4.99",
       credits: "50 credits",
       period: "one-time",
       description: "Great for small projects",
@@ -36,15 +41,17 @@ export default function PricingSection() {
       nonFeatures: [],
       cta: "Buy Credits",
       popular: true,
+      isFree: false,
+      priceId: import.meta.env.VITE_PRICE_ID_50,
     },
     {
       name: "Pro Pack",
-      price: "$19.99",
-      credits: "120 credits",
+      price: "$9.99",
+      credits: "110 credits",
       period: "one-time",
       description: "Perfect for larger projects",
       features: [
-        "120 icon generations",
+        "110 icon generations",
         "Download in all formats",
         "All icon styles",
         "Priority generation",
@@ -53,11 +60,13 @@ export default function PricingSection() {
       nonFeatures: [],
       cta: "Buy Credits",
       popular: false,
+      isFree: false,
+      priceId: import.meta.env.VITE_PRICE_ID_110,
     },
   ]
 
   return (
-    <section id="pricing" className="py-16 bg-white">
+    <section id="pricing" className="py-16">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900">Simple, pay-as-you-go pricing</h2>
@@ -86,15 +95,26 @@ export default function PricingSection() {
                 <div className="mt-2 text-lg font-medium text-gray-900">{tier.credits}</div>
                 <p className="mt-2 text-gray-600">{tier.description}</p>
 
-                <Button
-                  className={`mt-6 w-full ${tier.popular ? "bg-blue-500 hover:bg-blue-600" : ""}`}
-                  variant={tier.popular ? "default" : "outline"}
-                >
-                  {tier.cta}
-                </Button>
+                {tier.isFree ? (
+                  <Button
+                    className="mt-6 w-full"
+                    variant="outline"
+                    onClick={() => navigate('/generate')}
+                  >
+                    {tier.cta}
+                  </Button>
+                ) : (
+                  <CheckoutButton
+                    className={`mt-6 w-full ${tier.popular ? "bg-blue-500 hover:bg-blue-600" : ""}`}
+                    variant={tier.popular ? "default" : "outline"}
+                    priceId={tier.priceId}
+                  >
+                    {tier.cta}
+                  </CheckoutButton>
+                )}
               </div>
 
-              <div className="p-6 border-t border-gray-100">
+              <div className="p-6 border-t bg-white border-gray-100">
                 <ul className="space-y-3">
                   {tier.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start">

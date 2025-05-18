@@ -20,11 +20,11 @@ export async function generateIcon(description: string): Promise<string> {
 
     const data = await response.json();
     console.log('Received data:', data);
-    if (!data.svg) {
-      console.error('No SVG in response:', data);
-      throw new Error('No SVG data received');
+    if (!data.png) {
+      console.error('No PNG in response:', data);
+      throw new Error('No PNG data received');
     }
-    return data.svg;
+    return data.png;
   } catch (error) {
     console.error('Error in generateIcon:', error);
     throw error;

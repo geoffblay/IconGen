@@ -5,11 +5,14 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Generate from "./pages/Generate";
 import Account from "./pages/Account";
+import SuccessPage from "./pages/SuccessPage";
+import CancelPage from "./pages/CancelPage";
 import { AuthProvider } from './contexts/AuthContext'
-import './App.css'
 import Footer from "./components/ui/footer";
 import ProtectedRoute from './components/ProtectedRoute';
-// import About from "./pages/About";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Contact from "./pages/Contact";
+import ConfirmEmail from "./pages/ConfirmEmail";
 
 function App() {
   return (
@@ -39,6 +42,24 @@ function App() {
               }
             />
             <Route
+              path="/confirm-email"
+              element={
+                <ConfirmEmail />
+              }
+            />
+            <Route
+              path="/privacy-policy"
+              element={
+                <PrivacyPolicy />
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <Contact />
+              }
+            />
+            <Route
               path="/generate"
               element={
                 <ProtectedRoute>
@@ -51,6 +72,22 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Account />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/success"
+              element={
+                <ProtectedRoute>
+                  <SuccessPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/cancel"
+              element={
+                <ProtectedRoute>
+                  <CancelPage />
                 </ProtectedRoute>
               }
             />

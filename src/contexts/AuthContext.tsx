@@ -97,16 +97,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signUp = async (email: string, password: string) => {
     console.log('Attempting sign up for:', email);
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: import.meta.env.FRONTEND_URL + '/login',
+      },
+    });
     console.log('Sign up result:', { data, error });
     if (error) throw error;
-
-    // Add welcome bonus credits
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      console.log('Adding welcome bonus credits for:', user.id);
-      await addCredits(10, 'bonus', 'Welcome bonus credits');
-    }
   };
 
   const signOut = async () => {
