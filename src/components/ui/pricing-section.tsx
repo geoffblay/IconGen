@@ -111,7 +111,7 @@ export default function PricingSection() {
                 )}
               </div>
 
-              <div className="p-6 border-t border-gray-100">
+              <div className="p-6 border-t bg-white border-gray-100">
                 <ul className="space-y-3">
                   {tier.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start">
