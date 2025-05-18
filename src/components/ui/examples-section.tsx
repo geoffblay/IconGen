@@ -51,7 +51,7 @@ export default function ExamplesSection() {
                 <p className="text-gray-600 mb-4">{example.description}</p>
                 <Button 
                   variant="ghost" 
-                  className="group text-sm p-0 h-auto"
+                  className="group text-sm p-0 h-auto hover:bg-purple-200"
                   onClick={() => navigate('/generate')}
                 >
                   Try it out!
