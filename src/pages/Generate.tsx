@@ -125,7 +125,7 @@ export default function Generate() {
         </div>
 
         <div className="flex justify-center">
-          <Card className="w-full max-w-2xl p-6">
+          <Card className="w-full max-w-2xl p-6 bg-transparent border-2 border-gray-950">
             <div className="mb-4 text-sm text-gray-600 pl-1">
               Credits remaining: {credits}
             </div>
@@ -140,18 +140,19 @@ export default function Generate() {
                   onChange={(e) => setDescription(e.target.value)}
                   required
                   disabled={credits <= 0}
-                  className="mt-2"
+                  className="mt-2 border-0 border-b-2 border-gray-950 shadow-none rounded-none disabled:opacity-100 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
               </div>
               <div className="flex items-center space-x-2">
                 <Button
                   type="submit"
                   disabled={isLoading || (credits <= 0)}
+                  className="disabled:cursor-not-allowed bg-gray-950 text-purple-100"
                 >
                   {isLoading ? 'Generating...' : 'Generate Icon'}
                   {isLoading && (
                     <svg
-                      className="animate-spin h-5 w-5 ml-2 text-white"
+                      className="animate-spin h-5 w-5 ml-2 text-purple-100"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -189,6 +190,7 @@ export default function Generate() {
                     }, 100);
                   }}
                   variant="outline"
+                  className="bg-transparent border-2 border-gray-950 text-gray-950 hover:bg-purple-300"
                 >
                   Buy More Credits
                 </Button>
@@ -204,7 +206,7 @@ export default function Generate() {
             {generatedPng && (
               <div className="mt-6">
                 <h3 className="text-lg font-semibold mb-2">Generated Icon</h3>
-                <div className="flex justify-center w-full bg-white rounded-lg p-4 relative">
+                <div className="flex justify-center w-full bg-transparent rounded-lg p-4 relative">
                   <img
                     src={`data:image/png;base64,${generatedPng}`}
                     alt="Generated icon"
@@ -227,10 +229,10 @@ export default function Generate() {
                 <div className="mt-4">
                   {hasPurchasedCredits ? (
                     <div className="flex space-x-4">
-                      <Button onClick={handleDownloadPng}>
+                      <Button onClick={handleDownloadPng} className='bg-gray-950 text-purple-100'>
                         Download PNG
                       </Button>
-                      <Button onClick={handleDownloadSvg} variant="outline">
+                      <Button onClick={handleDownloadSvg} variant="outline" className='bg-transparent border-2 border-gray-950 text-gray-950 hover:bg-purple-300'>
                         Download SVG
                       </Button>
                     </div>

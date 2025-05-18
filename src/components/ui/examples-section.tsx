@@ -9,17 +9,17 @@ export default function ExamplesSection() {
     {
       title: "Add branding",
       description: "'A minimalist rocket ship icon for a tech startup'",
-      imageUrl: "src/assets/rocket.png",
+      imageUrl: "/images/rocket.png",
     },
     {
       title: "Stand out",
       description: "'Abstract flame for a fitness brand'",
-      imageUrl: "src/assets/flame.png",
+      imageUrl: "/images/flame.png",
     },
     {
       title: "Make it fun",
       description: "'A cute avocado icon with friendly face'",
-      imageUrl: "src/assets/avocado.png",
+      imageUrl: "/images/avocado.png",
     },
   ]
 
@@ -37,13 +37,13 @@ export default function ExamplesSection() {
           {examples.map((example, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg"
+              className="rounded-xl overflow-hidden transition-all duration-300 hover:bg-purple-200 border-solid border-gray-950 border-2"
             >
-              <div className="aspect-video w-full overflow-hidden bg-gray-100">
+              <div className="aspect-video w-full overflow-hidden">
                 <img
                   src={example.imageUrl || "/placeholder.svg"}
                   alt={example.title}
-                  className="w-full h-full object-contain bg-white"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <div className="p-6">
@@ -51,7 +51,7 @@ export default function ExamplesSection() {
                 <p className="text-gray-600 mb-4">{example.description}</p>
                 <Button 
                   variant="ghost" 
-                  className="group text-sm p-0 h-auto"
+                  className="group text-sm p-0 h-auto hover:bg-purple-200"
                   onClick={() => navigate('/generate')}
                 >
                   Try it out!

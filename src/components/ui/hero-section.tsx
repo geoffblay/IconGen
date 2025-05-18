@@ -18,15 +18,14 @@ export default function HeroSection() {
                         <Button
                             size="lg"
                             onClick={() => navigate('/generate')}
-                            className="text-lg px-8 py-6"
+                            className="text-lg px-8 py-6 border-2 bg-gray-950 text-purple-200 border-gray-950"
                         >
                             Get Started
                         </Button>
                         <Button
-                            variant="outline"
                             size="lg"
                             onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
-                            className="text-lg px-8 py-6"
+                            className="text-lg px-8 py-6 bg-transparent border-2 border-gray-950 text-gray-950 hover:bg-purple-300"
                         >
                             View Pricing
                         </Button>

@@ -79,14 +79,14 @@ export default function PricingSection() {
           {pricingTiers.map((tier, index) => (
             <div
               key={index}
-              className={`flex-1 rounded-lg overflow-hidden border ${
-                tier.popular ? "border-blue-500 shadow-lg relative" : "border-gray-200 shadow-md"
+              className={`flex-1 rounded-lg overflow-hidden border transition-transform duration-300 transform hover:scale-102 ${
+                tier.popular ? "border-purple-500 border-2 shadow-lg relative" : "border-gray-950 border shadow-md"
               }`}
             >
               {tier.popular && (
-                <div className="bg-blue-500 text-white text-xs font-semibold py-1 text-center">MOST POPULAR</div>
+                <div className="bg-purple-500 text-white text-xs font-semibold py-1 text-center">MOST POPULAR</div>
               )}
-              <div className={`p-6 ${tier.popular ? "bg-blue-50" : "bg-white"}`}>
+              <div className={`p-6 ${tier.popular ? "bg-purple-100" : "bg-transparent"}`}>
                 <h3 className="text-xl font-bold text-gray-900">{tier.name}</h3>
                 <div className="mt-4 flex items-baseline">
                   <span className="text-4xl font-extrabold text-gray-900">{tier.price}</span>
@@ -97,7 +97,7 @@ export default function PricingSection() {
 
                 {tier.isFree ? (
                   <Button
-                    className="mt-6 w-full"
+                    className="mt-6 w-full bg-transparent border-1 border-gray-950 text-gray-950 hover:bg-purple-300"
                     variant="outline"
                     onClick={() => navigate('/generate')}
                   >
@@ -105,7 +105,7 @@ export default function PricingSection() {
                   </Button>
                 ) : (
                   <CheckoutButton
-                    className={`mt-6 w-full ${tier.popular ? "bg-blue-500 hover:bg-blue-600" : ""}`}
+                    className={`mt-6 w-full ${tier.popular ? "bg-purple-500 hover:bg-purple-600" : "bg-transparent border-1 border-gray-950 text-gray-950 hover:bg-purple-300"}`}
                     variant={tier.popular ? "default" : "outline"}
                     priceId={tier.priceId}
                   >
@@ -114,7 +114,7 @@ export default function PricingSection() {
                 )}
               </div>
 
-              <div className="p-6 border-t bg-white border-gray-100">
+              <div className="p-6 border-t bg-transparent border-purple-100">
                 <ul className="space-y-3">
                   {tier.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start">
