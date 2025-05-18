@@ -36,8 +36,6 @@ export function CheckoutButton({
         throw new Error('Failed to create checkout session');
       }
       
-      console.log('response');
-      console.log(response);
       const { url } = await response.json();
       if (url) {
         window.location.href = url;

@@ -18,6 +18,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
   addCredits: (amount: number, type: 'purchase' | 'usage' | 'bonus', description: string) => Promise<void>;
   useCredits: (amount: number, description: string) => Promise<boolean>;
   refreshCredits: () => Promise<void>;
@@ -36,7 +37,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Get current balance
       const { data: balanceData, error: balanceError } = await supabase
         .rpc('get_user_credit_balance', { p_user_id: userId });
-      console.log('Balance data:', balanceData);
 
       if (balanceError) throw balanceError;
       setCredits(balanceData || 0);
@@ -63,22 +63,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.log('Session check result:', { session, error });
       setUser(session?.user ?? null);
       if (session?.user) {
-        console.log('User found, fetching credits for:', session.user.id);
         fetchUserCredits(session.user.id);
       }
       setLoading(false);
     });
 
     // Listen for changes on auth state
-    console.log('Setting up auth state listener...');
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       console.log('Auth state changed:', { event, session });
       setUser(session?.user ?? null);
       if (session?.user) {
-        console.log('User authenticated, fetching credits for:', session.user.id);
         fetchUserCredits(session.user.id);
       } else {
-        console.log('No user session, resetting credits');
         setCredits(0);
         setCreditHistory([]);
       }
@@ -89,22 +85,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    console.log('Attempting sign in for:', email);
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    console.log('Sign in result:', { data, error });
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw error;
   };
 
   const signUp = async (email: string, password: string) => {
-    console.log('Attempting sign up for:', email);
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         emailRedirectTo: import.meta.env.FRONTEND_URL + '/login',
       },
     });
-    console.log('Sign up result:', { data, error });
     if (error) throw error;
   };
 
@@ -113,13 +105,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (error) throw error;
   };
 
+  const resetPassword = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: import.meta.env.FRONTEND_URL + '/update-password',
+    });
+    if (error) throw error;
+  };
+
   const addCredits = async (amount: number, type: 'purchase' | 'usage' | 'bonus', description: string) => {
     if (!user) throw new Error('User must be logged in');
-
-    console.log('user:', user);
-    const session = await supabase.auth.getSession();
-    console.log('session:', session);
-
 
     const { error } = await supabase
       .from('credits')
@@ -163,6 +157,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     signIn,
     signUp,
     signOut,
+    resetPassword,
     addCredits,
     useCredits,
     refreshCredits,
