@@ -6,13 +6,15 @@ interface CheckoutButtonProps {
   variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
   size?: 'default' | 'sm' | 'lg' | 'icon';
   children?: React.ReactNode;
+  priceId?: string;
 }
 
 export function CheckoutButton({ 
   className,
   variant = 'default',
   size = 'default',
-  children = 'Buy Credits'
+  children = 'Buy Credits',
+  priceId = 'price_1RPzX5RsgSvwFx9YjMjZ8mCd',
 }: CheckoutButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,6 +27,9 @@ export function CheckoutButton({
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+          priceId: priceId,
+        }),
       });
 
       if (!response.ok) {

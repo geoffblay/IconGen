@@ -42,6 +42,7 @@ export default function PricingSection() {
       cta: "Buy Credits",
       popular: true,
       isFree: false,
+      priceId: import.meta.env.VITE_PRICE_ID_50,
     },
     {
       name: "Pro Pack",
@@ -60,6 +61,7 @@ export default function PricingSection() {
       cta: "Buy Credits",
       popular: false,
       isFree: false,
+      priceId: import.meta.env.VITE_PRICE_ID_110,
     },
   ]
 
@@ -105,6 +107,7 @@ export default function PricingSection() {
                   <CheckoutButton
                     className={`mt-6 w-full ${tier.popular ? "bg-blue-500 hover:bg-blue-600" : ""}`}
                     variant={tier.popular ? "default" : "outline"}
+                    priceId={tier.priceId}
                   >
                     {tier.cta}
                   </CheckoutButton>
