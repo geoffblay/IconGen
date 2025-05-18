@@ -8,7 +8,6 @@ import Account from "./pages/Account";
 import SuccessPage from "./pages/SuccessPage";
 import CancelPage from "./pages/CancelPage";
 import { AuthProvider } from './contexts/AuthContext'
-import './App.css'
 import Footer from "./components/ui/footer";
 import ProtectedRoute from './components/ProtectedRoute';
 import PrivacyPolicy from "./pages/PrivacyPolicy";
