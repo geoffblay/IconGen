@@ -18,6 +18,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
   addCredits: (amount: number, type: 'purchase' | 'usage' | 'bonus', description: string) => Promise<void>;
   useCredits: (amount: number, description: string) => Promise<boolean>;
   refreshCredits: () => Promise<void>;
@@ -113,6 +114,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (error) throw error;
   };
 
+  const resetPassword = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: import.meta.env.FRONTEND_URL + '/update-password',
+    });
+    if (error) throw error;
+  };
+
   const addCredits = async (amount: number, type: 'purchase' | 'usage' | 'bonus', description: string) => {
     if (!user) throw new Error('User must be logged in');
 
@@ -163,6 +171,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     signIn,
     signUp,
     signOut,
+    resetPassword,
     addCredits,
     useCredits,
     refreshCredits,

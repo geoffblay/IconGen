@@ -13,6 +13,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Contact from "./pages/Contact";
 import ConfirmEmail from "./pages/ConfirmEmail";
+import UpdatePassword from "./pages/UpdatePassword";
 
 function App() {
   return (
@@ -45,6 +46,12 @@ function App() {
               path="/confirm-email"
               element={
                 <ConfirmEmail />
+              }
+            />
+            <Route
+              path="/update-password"
+              element={
+                <UpdatePassword />
               }
             />
             <Route
