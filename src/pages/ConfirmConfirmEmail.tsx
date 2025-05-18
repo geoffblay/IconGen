@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useSearchParams } from 'react-router-dom';
 
-export default function ConfirmPasswordReset() {
+export default function ConfirmConfirmEmail() {
   const [searchParams] = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +22,7 @@ export default function ConfirmPasswordReset() {
       // go to the confirmation url
       window.location.href = confirmationUrl;
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to process password reset');
+      setError(err instanceof Error ? err.message : 'Failed to process confirm email');
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -33,8 +33,8 @@ export default function ConfirmPasswordReset() {
     <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md p-8 bg-transparent border-2 border-gray-950">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900">Reset Your Password</h2>
-          <p className="mt-2 text-gray-600">Click the button below to proceed with password reset</p>
+          <h2 className="text-3xl font-bold text-gray-900">Confirm your email</h2>
+          <p className="mt-2 text-gray-600">Click the button below to proceed with confirm email</p>
         </div>
 
         {error && (
@@ -48,7 +48,7 @@ export default function ConfirmPasswordReset() {
           className="w-full"
           disabled={isLoading}
         >
-          {isLoading ? 'Processing...' : 'Reset Password'}
+          {isLoading ? 'Processing...' : 'Confirm Email'}
         </Button>
       </Card>
     </div>
