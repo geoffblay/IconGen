@@ -51,7 +51,9 @@ function App() {
             <Route
               path="/update-password"
               element={
-                <UpdatePassword />
+                <ProtectedRoute>
+                  <UpdatePassword />
+                </ProtectedRoute>
               }
             />
             <Route
