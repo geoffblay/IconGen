@@ -115,14 +115,14 @@ export default function Header() {
                   </Button>
                 </>
               ) : (
-                <>
+                <div className="flex flex-col gap-2">
                   <Link to="/login">
-                    <Button variant="outline" className="w-full" onClick={() => setIsMenuOpen(false)}>Sign in</Button>
+                    <Button variant="outline" className="w-full bg-transparent border-2 border-gray-950 text-gray-950 hover:bg-purple-300" onClick={() => setIsMenuOpen(false)}>Sign in</Button>
                   </Link>
                   <Link to="/signup">
-                    <Button className="w-full" onClick={() => setIsMenuOpen(false)}>Sign up</Button>
+                    <Button className="w-full bg-gray-950 text-purple-200" onClick={() => setIsMenuOpen(false)}>Sign up</Button>
                   </Link>
-                </>
+                </div>
               )}
             </div>
           </div>
