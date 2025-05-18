@@ -56,10 +56,10 @@ export default function Header() {
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="ghost">Sign in</Button>
+                  <Button className='bg-transparent border-2 border-gray-950 text-gray-950 hover:bg-purple-300'>Sign in</Button>
                 </Link>
                 <Link to="/signup">
-                  <Button>Sign up</Button>
+                  <Button className='bg-gray-950 text-purple-200'>Sign up</Button>
                 </Link>
               </>
             )}
