@@ -121,4 +121,12 @@
 
 body {
   background: linear-gradient(to top, white, oklch(90.2% 0.063 306.703));
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  overflow-x: hidden;
+}
+
+html {
+  height: -webkit-fill-available;
+  background: linear-gradient(to top, white, oklch(90.2% 0.063 306.703));
 }
