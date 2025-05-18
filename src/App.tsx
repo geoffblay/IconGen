@@ -14,7 +14,6 @@ import ProtectedRoute from './components/ProtectedRoute';
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Contact from "./pages/Contact";
 import ConfirmEmail from "./pages/ConfirmEmail";
-// import About from "./pages/About";
 
 function App() {
   return (
