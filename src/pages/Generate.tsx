@@ -140,7 +140,7 @@ export default function Generate() {
                   onChange={(e) => setDescription(e.target.value)}
                   required
                   disabled={credits <= 0}
-                  className="mt-2 border-0 border-b-2 border-gray-950 shadow-none rounded-none disabled:opacity-100"
+                  className="mt-2 border-0 border-b-2 border-gray-950 shadow-none rounded-none disabled:opacity-100 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
               </div>
               <div className="flex items-center space-x-2">
@@ -229,10 +229,10 @@ export default function Generate() {
                 <div className="mt-4">
                   {hasPurchasedCredits ? (
                     <div className="flex space-x-4">
-                      <Button onClick={handleDownloadPng}>
+                      <Button onClick={handleDownloadPng} className='bg-gray-950 text-purple-100'>
                         Download PNG
                       </Button>
-                      <Button onClick={handleDownloadSvg} variant="outline">
+                      <Button onClick={handleDownloadSvg} variant="outline" className='bg-transparent border-2 border-gray-950 text-gray-950 hover:bg-purple-300'>
                         Download SVG
                       </Button>
                     </div>
