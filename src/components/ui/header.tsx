@@ -41,10 +41,10 @@ export default function Header() {
             {user ? (
               <>
                 <Link to="/generate">
-                  <Button variant="ghost">Generate</Button>
+                  <Button variant="ghost" className='bg-transparent border-2 border-gray-950 text-gray-950 hover:bg-purple-300'>Generate</Button>
                 </Link>
                 <Link to="/account">
-                  <Button variant="ghost">Account</Button>
+                  <Button variant="ghost" className='bg-transparent border-2 border-gray-950 text-gray-950 hover:bg-purple-300'>Account</Button>
                 </Link>
                 <Button 
                   onClick={handleSignOut}
