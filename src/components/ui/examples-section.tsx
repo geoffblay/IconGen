@@ -37,13 +37,13 @@ export default function ExamplesSection() {
           {examples.map((example, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg"
+              className="rounded-xl overflow-hidden transition-all duration-300 hover:bg-purple-200 border-solid border-gray-950 border-2"
             >
-              <div className="aspect-video w-full overflow-hidden bg-gray-100">
+              <div className="aspect-video w-full overflow-hidden">
                 <img
                   src={example.imageUrl || "/placeholder.svg"}
                   alt={example.title}
-                  className="w-full h-full object-contain bg-white"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <div className="p-6">
