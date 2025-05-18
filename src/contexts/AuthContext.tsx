@@ -70,6 +70,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // Listen for changes on auth state
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state changed:', { event, session });
       setUser(session?.user ?? null);
       if (session?.user) {
         fetchUserCredits(session.user.id);
@@ -84,12 +85,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw error;
   };
 
   const signUp = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -113,9 +114,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const addCredits = async (amount: number, type: 'purchase' | 'usage' | 'bonus', description: string) => {
     if (!user) throw new Error('User must be logged in');
-
-    const session = await supabase.auth.getSession();
-
 
     const { error } = await supabase
       .from('credits')
