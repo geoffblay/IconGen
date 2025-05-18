@@ -17,7 +17,9 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { signIn } = useAuth();
+  const [isResettingPassword, setIsResettingPassword] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
+  const { signIn, resetPassword } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = (location.state as LocationState)?.from?.pathname || '/generate';
@@ -35,6 +37,26 @@ export default function Login() {
       console.error(err);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleResetPassword = async () => {
+    if (!email) {
+      setError('Please enter your email address');
+      return;
+    }
+
+    setError(null);
+    setIsResettingPassword(true);
+
+    try {
+      await resetPassword(email);
+      setResetSent(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to send reset email');
+      console.error(err);
+    } finally {
+      setIsResettingPassword(false);
     }
   };
 
@@ -60,7 +82,17 @@ export default function Login() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <div className="flex justify-between items-center">
+              <Label htmlFor="password">Password</Label>
+              <button
+                type="button"
+                onClick={handleResetPassword}
+                disabled={isResettingPassword}
+                className="text-sm text-blue-600 hover:underline"
+              >
+                {isResettingPassword ? 'Sending...' : 'Forgot password?'}
+              </button>
+            </div>
             <Input
               id="password"
               type="password"
@@ -74,6 +106,12 @@ export default function Login() {
           {error && (
             <div className="text-red-500 text-sm">
               {error}
+            </div>
+          )}
+
+          {resetSent && (
+            <div className="text-green-600 text-sm">
+              Password reset email sent! Please check your inbox.
             </div>
           )}
 
