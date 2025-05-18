@@ -21,7 +21,7 @@ export default function Signup() {
 
     try {
       await signUp(email, password);
-      navigate('/generate');
+      navigate('/confirm-email');
     } catch (err) {
       setError('Failed to create account. Please try again.');
       console.error(err);
@@ -31,11 +31,11 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <Card className="w-full max-w-md p-8">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <Card className="w-full max-w-md p-8 bg-transparent border-2 border-gray-950">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900">Create an account</h2>
-          <p className="mt-2 text-gray-600">Get 10 free credits when you sign up</p>
+          <p className="mt-2 text-gray-600">Get 5 free credits when you sign up!</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -47,6 +47,7 @@ export default function Signup() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className="border-0 border-b-2 border-gray-950 shadow-none rounded-none disabled:opacity-100 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
             />
           </div>
 
@@ -58,6 +59,7 @@ export default function Signup() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              className="border-0 border-b-2 border-gray-950 shadow-none rounded-none disabled:opacity-100 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
             />
           </div>
 
@@ -86,7 +88,7 @@ export default function Signup() {
                 Sign in
               </button>
             </p>
-          </div>
+      </div>
         </form>
       </Card>
     </div>

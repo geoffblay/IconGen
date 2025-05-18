@@ -5,23 +5,26 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Generate from "./pages/Generate";
 import Account from "./pages/Account";
+import SuccessPage from "./pages/SuccessPage";
+import CancelPage from "./pages/CancelPage";
 import { AuthProvider } from './contexts/AuthContext'
-import './App.css'
 import Footer from "./components/ui/footer";
 import ProtectedRoute from './components/ProtectedRoute';
-// import About from "./pages/About";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Contact from "./pages/Contact";
+import ConfirmEmail from "./pages/ConfirmEmail";
 
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        {/* Header shows on every page */}
-        <Header />
+    <Router>
+      {/* Header shows on every page */}
+      <Header />
 
-        {/* Main content changes based on route */}
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
+      {/* Main content changes based on route */}
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
             <Route
               path="/login"
               element={
@@ -36,6 +39,24 @@ function App() {
                 <ProtectedRoute requireAuth={false}>
                   <Signup />
                 </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/confirm-email"
+              element={
+                <ConfirmEmail />
+              }
+            />
+            <Route
+              path="/privacy-policy"
+              element={
+                <PrivacyPolicy />
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <Contact />
               }
             />
             <Route
@@ -54,12 +75,28 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            {/* <Route path="/about" element={<About />} /> */}
-          </Routes>
-        </main>
+            <Route
+              path="/success"
+              element={
+                <ProtectedRoute>
+                  <SuccessPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/cancel"
+              element={
+                <ProtectedRoute>
+                  <CancelPage />
+                </ProtectedRoute>
+              }
+            />
+          {/* <Route path="/about" element={<About />} /> */}
+        </Routes>
+      </main>
 
         <Footer />
-      </Router>
+    </Router>
     </AuthProvider>
   );
 }
