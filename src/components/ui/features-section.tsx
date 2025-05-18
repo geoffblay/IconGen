@@ -1,6 +1,6 @@
 export default function FeaturesSection() {
     return (
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 px-6">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 container mx-auto px-4">
             <div className="p-6 bg-white rounded-xl shadow-sm">
                 <h3 className="text-xl font-semibold mb-2">AI-Powered</h3>
                 <p className="text-gray-600">Generate unique icons from simple text descriptions using advanced AI.</p>
