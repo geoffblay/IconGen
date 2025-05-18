@@ -11,7 +11,6 @@ export default function UpdatePassword() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(password);
     try {
         await supabase.auth.updateUser({
             password: password,

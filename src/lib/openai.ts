@@ -1,7 +1,5 @@
 // Remove all imports and unused code
 export async function generateIcon(description: string): Promise<string> {
-  console.log('Sending request to generate icon:', description);
-  console.log('Environment:', process.env.NODE_ENV);
   try {
     const response = await fetch('/api/generate-icon', {
       method: 'POST',
@@ -11,7 +9,6 @@ export async function generateIcon(description: string): Promise<string> {
       body: JSON.stringify({ description }),
     });
 
-    console.log('Response status:', response.status);
     if (!response.ok) {
       const errorText = await response.text();
       console.error('Error response:', errorText);
@@ -19,7 +16,6 @@ export async function generateIcon(description: string): Promise<string> {
     }
 
     const data = await response.json();
-    console.log('Received data:', data);
     if (!data.png) {
       console.error('No PNG in response:', data);
       throw new Error('No PNG data received');

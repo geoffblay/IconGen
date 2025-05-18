@@ -9,7 +9,6 @@ const openai = new OpenAI({
 const mockPng = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=`;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  console.log('Received request:', req.method);
   
   if (req.method !== 'POST') {
     console.error('Invalid method:', req.method);
@@ -18,8 +17,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const { description } = req.body;
-    console.log('Generating icon for description:', description);
-    console.log('Environment:', process.env.USE_MOCK_RESPONSE);
 
     if (!description) {
       console.error('No description provided');
@@ -33,7 +30,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const prompt = `Create a simple, minimalist vector-style icon of ${description}. The icon should be black with a white background and be suitable for use in a user interface. Use clean lines and simple shapes.`;
-    console.log('Using prompt:', prompt);
 
     const response = await openai.images.generate({
       model: "gpt-image-1",
@@ -43,7 +39,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       background: "transparent"
     });
 
-    console.log('OpenAI response received');
     if (!response.data?.[0]?.b64_json) {
       console.error('No image data in response:', response);
       throw new Error('No image data returned from OpenAI');
