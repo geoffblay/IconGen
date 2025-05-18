@@ -64,7 +64,7 @@ export default function Account() {
 
         <div className="space-y-6">
           {/* Account Information */}
-          <Card className="p-6">
+          <Card className="p-6 bg-transparent border-2 border-gray-950">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Account Information</h2>
             <div className="space-y-4">
               <div>
@@ -89,7 +89,7 @@ export default function Account() {
           </Card>
 
           {/* Credit Balance */}
-          <Card className="p-6">
+          <Card className="p-6 bg-transparent border-2 border-gray-950">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Credit Balance</h2>
             <div className="flex items-baseline space-x-2">
               <span className="text-3xl font-bold text-gray-900">{credits}</span>
@@ -109,7 +109,7 @@ export default function Account() {
           </Card>
 
           {/* Recent Activity */}
-          <Card className="p-6">
+          <Card className="p-6 bg-transparent border-2 border-gray-950">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Recent Activity</h2>
             {creditHistory.length > 0 ? (
               <div className="space-y-4">
