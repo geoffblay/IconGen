@@ -14,7 +14,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Contact from "./pages/Contact";
 import ConfirmEmail from "./pages/ConfirmEmail";
 import UpdatePassword from "./pages/UpdatePassword";
-
+import ConfirmPasswordReset from "./pages/ConfirmPasswordReset";
+import ConfirmConfirmEmail from "./pages/ConfirmConfirmEmail";
 function App() {
   return (
     <AuthProvider>
@@ -46,6 +47,18 @@ function App() {
               path="/confirm-email"
               element={
                 <ConfirmEmail />
+              }
+            />
+            <Route
+              path="/confirm-password-reset"
+              element={
+                <ConfirmPasswordReset />
+              }
+            />
+            <Route
+              path="/confirm-confirm-email"
+              element={
+                <ConfirmConfirmEmail />
               }
             />
             <Route
