@@ -110,6 +110,7 @@ export default function PricingSection() {
                     className={`mt-6 w-full ${tier.popular ? "bg-purple-500 hover:bg-purple-600" : "bg-transparent border-1 border-gray-950 text-gray-950 hover:bg-purple-300"}`}
                     variant={tier.popular ? "default" : "outline"}
                     priceId={tier.priceId}
+                    productId={tier.productId}
                   >
                     {tier.cta}
                   </CheckoutButton>

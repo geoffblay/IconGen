@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface CheckoutButtonProps {
   className?: string;
@@ -7,6 +9,7 @@ interface CheckoutButtonProps {
   size?: 'default' | 'sm' | 'lg' | 'icon';
   children?: React.ReactNode;
   priceId?: string;
+  productId?: string;
 }
 
 export function CheckoutButton({ 
@@ -15,10 +18,18 @@ export function CheckoutButton({
   size = 'default',
   children = 'Buy Credits',
   priceId = 'price_1RPzX5RsgSvwFx9YjMjZ8mCd',
+  productId = 'prod_SKeqeVeXEVRYhi',
 }: CheckoutButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   const handleCheckout = async () => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+
     try {
       setIsLoading(true);
       
@@ -29,6 +40,8 @@ export function CheckoutButton({
         },
         body: JSON.stringify({
           priceId: priceId,
+          productId: productId,
+          userId: user.id,
         }),
       });
 
