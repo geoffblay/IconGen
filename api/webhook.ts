@@ -16,6 +16,7 @@ export const config = {
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  console.log('Webhook received');
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
