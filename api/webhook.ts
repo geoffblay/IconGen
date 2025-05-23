@@ -37,8 +37,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const userId = session.client_reference_id;
     const productId = session.metadata?.product_id;
-    const amount = productId === process.env.VITE_PRODUCT_ID_50 ? 50 : 110;
+    const creditAmount = productId === process.env.VITE_PRODUCT_ID_50 ? 50 : 110;
+    const amount = session.amount_total / 100;
     const status = session.payment_status;
+    const sessionId = session.id;
 
     // Insert into Supabase via REST API or PostgREST
     try {
@@ -54,6 +56,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           amount: amount,
           product_id: productId,
           status: status,
+          credit_amount: creditAmount,
+          session_id: sessionId,
         }),
       });
 
