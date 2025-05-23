@@ -22,6 +22,7 @@
     "clsx": "^2.1.1",
     "imagetracerjs": "^1.2.6",
     "lucide-react": "^0.509.0",
+    "micro": "^10.0.1",
     "openai": "^4.98.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

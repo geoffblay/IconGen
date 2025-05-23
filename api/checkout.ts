@@ -10,21 +10,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { priceId } = req.body;
+  const { priceId, productId, userId } = req.body;
 
   try {
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
-          // Provide the exact Price ID (for example, price_1234) of the product you want to sell
           price: priceId,
           quantity: 1,
         },
       ],
       mode: 'payment',
+      client_reference_id: userId,
       success_url: `${req.headers.origin}/success`,
       cancel_url: `${req.headers.origin}/cancel`,
       automatic_tax: { enabled: true },
+      metadata: {
+        product_id: productId,
+      },
     });
 
     // res.redirect(303, session.url);
