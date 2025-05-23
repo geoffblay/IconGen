@@ -1,5 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import Stripe from 'stripe';
+import { buffer } from 'micro';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-04-30.basil',
@@ -15,13 +16,11 @@ export const config = {
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const chunks: Uint8Array[] = [];
-
-  for await (const chunk of req) {
-    chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk);
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const rawBody = Buffer.concat(chunks);
+  const rawBody = await buffer(req);
   const sig = req.headers['stripe-signature'] as string;
 
   let event: Stripe.Event;
@@ -43,7 +42,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Insert into Supabase via REST API or PostgREST
     try {
-      await fetch(`${process.env.SUPABASE_URL}/rest/v1/stripe_orders`, {
+      await fetch(`${process.env.VITE_SUPABASE_URL}/rest/v1/stripe_orders`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
