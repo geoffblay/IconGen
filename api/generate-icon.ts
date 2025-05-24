@@ -1,5 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import OpenAI from 'openai';
+import sharp from 'sharp';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -45,9 +46,37 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const base64Image = response.data[0].b64_json;
-    console.log('Successfully generated image');
-    
-    res.status(200).json({ png: base64Image });
+    const imageBuffer = Buffer.from(base64Image, 'base64');
+
+    // Convert all non-transparent pixels to pure black
+    const cleanedBuffer = await sharp(imageBuffer)
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true })
+      .then(({ data, info }) => {
+        const { width, height, channels } = info;
+
+        for (let i = 0; i < data.length; i += channels) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          const a = data[i + 3];
+
+          if (a > 0) {
+            // If pixel is not transparent, set to pure black
+            data[i] = 0;
+            data[i + 1] = 0;
+            data[i + 2] = 0;
+          }
+        }
+
+        return sharp(data, {
+          raw: { width, height, channels }
+        }).png().toBuffer();
+      });
+
+    const base64Cleaned = cleanedBuffer.toString('base64');
+    res.status(200).json({ png: base64Cleaned });
   } catch (error) {
     console.error('Error generating icon:', error);
     res.status(500).json({ 
